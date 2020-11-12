@@ -1,7 +1,6 @@
-import server
-import argparse # argparse to take argument from the command-line
+import argparse
+# import cryptography
 
-# parser = argparse.ArgumentParser()
-# parser.parse_args()
-
-server.hello()
+parser = argparse.ArgumentParser()
+parser.add_argument('--username', action='store')
+args = parser.parse_args()
