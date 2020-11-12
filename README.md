@@ -18,18 +18,18 @@ Firstly, all 3 .py files must be in the same directory.
 
 Command usage is as follows:
 
-1) The server must be started by typing the following into the command line:
+1. The server must be started by typing the following into the command line:
 
-`python3 server.py`
+    `python3 server.py`
 
 The server will display a confirmation message that it has successfully started and is running. This will start  allowing requests from the 2 client .py files, read and send.
 
-2) User accounts
+2. User accounts
 
-2a) Creating a user account
+- Creating a user account
 
 **to do**
 
-2b) Using the provided accounts
+- Using the provided accounts
 
 **to do**
