@@ -11,7 +11,9 @@ user_input = args.username
 
 
 def login(username):
-    pw_input = getpass(f'Hello {username}, please input your password to continue: ')
+    pw_input = getpass(
+        f'Hello {username}, please input your password to continue: '
+    )
     print(pw_input)  # toremove: VERY DEFINITELY NOT IN FINAL CODE!!!!!!!
 
 
