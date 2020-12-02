@@ -17,13 +17,13 @@ def build_database():
     )''')
 
     c.execute('''CREATE TABLE messages (
-    date text not null,
-    sender text not null,
-    receiver text not null,
-    message text,
+    date DATE NOT NULL,
+    sender TEXT NOT NULL,
+    receiver TEXT NOT NULL,
+    message TEXT,
     FOREIGN KEY (sender) REFERENCES users(username)
     FOREIGN KEY (receiver) REFERENCES users(username)
-    primary key(date, sender, receiver)
+    PRIMARY KEY (date, sender, receiver)
     )''')
     connection.commit()
     connection.close()
