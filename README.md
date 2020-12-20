@@ -4,7 +4,6 @@
 ## Prerequisites
 
 You must have a terminal with the Python3 interpreter installed along with the following modules:
- - Pyro4
  - sqlite3
  - **...to be completed**
 
@@ -22,13 +21,15 @@ Command usage is as follows:
 
     `python3 server.py`
 
-The server will display a confirmation message that it has successfully started and is running. This will start  allowing requests from the 2 client .py files, read and send.
+The server will display a confirmation message that it has successfully started and is running. This will start allowing requests from the 2 client .py files, read and send.
 
 2. User accounts
 
 - Creating a user account
 
-**to do**
+    `python3 send.py --create-account`
+
+The application will prompt the user with how to create a by specifying a username and password.
 
 - Using the provided accounts
 
