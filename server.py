@@ -3,6 +3,8 @@ import os.path
 from datetime import datetime
 
 DATABASE = 'database.db'
+public_key = ''
+private_key = ''
 
 
 def build_database():
@@ -52,19 +54,27 @@ def new_user(username, password, p_key):
         return "User already exists"
 
 
+def fetch_users():
+    conn, cur = establish_db_conn()
+    query = cur.execute('SELECT username FROM users')
+    names = [name[0] for name in query]
+    return names
+
+
 def fetch_message():
     pass
 
 
-def save_message():
-    pass
+def save_message(sender, recipient, message):
+    conn, cur = establish_db_conn()
+    query_input = (sender, recipient, message,)
+    cur.execute('''INSERT INTO messages VALUES (?, ?, ?, ?)''', query_input)
+    close_db()
 
 
 def main():
     if not os.path.isfile(DATABASE):
         build_database()
-    else:
-        print('Database already built')
 
 
 main()

@@ -15,7 +15,7 @@ def login(user):
     pw_input = getpass(
         f'Hello {user}, please input your password to continue: '
     )
-    pw_confirm = getpass('Please confirm your passowrd: ')
+    pw_confirm = getpass('Please confirm your password: ')
     if pw_input == pw_confirm:
         pass
     else:

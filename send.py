@@ -19,15 +19,18 @@ parser.add_argument(
     action='store_true',
     help='see which accounts are available for you to message'
 )
+parser.add_argument(
+    '--new-user',
+    action='store',
+    help='create a new user to store in the database'
+)
 args = parser.parse_args()
 
 
-def create_user():
-    user = input('''Creating a new user \n
-    Please enter the desired username (must be unique and less than 20 chars): 
-    ''')
+def create_user(user):
     pw1 = getpass('Password: ')
     pw2 = getpass('Confirm password: ')
+    key = 'a thing'
     #  generate and store key
     if pw1 == pw2:
         server.new_user(user, pw1, key)
@@ -38,25 +41,28 @@ def get_message(user):
     return input('Input your message:\n')
 
 
-def fetch_users():
-    # request to server to find all users
-    pass
-
-
 def send_message(sender, recipient):
     msg = get_message()
     print(msg)
     pass
 
 
-def login():
+def login(username):
     # request to server to check credentials
     # returns true if login valid
+    password = getpass('Input your password: ')
     pass
 
 
 def main():
-    pass
+    if args.whos_online:
+        users = server.fetch_users()
+        for user in users:
+            print(user)
+    elif args.new_user:
+        create_user(args.new_user)
+
+    print(args)
 
 
 main()
