@@ -65,11 +65,30 @@ def fetch_message():
     pass
 
 
+def get_key(user):
+    conn, cur = establish_db_conn()
+    query = cur.execute('SELECT public_key FROM users WHERE username = ?', (user,))
+    return query.fetchone()
+
+
+def login(user, given_hash):
+    conn, cur = establish_db_conn()
+    query = cur.execute('SELECT password FROM users WHERE username = ?', (user,))
+    stored_hash = query.fetchone()
+    if given_hash == stored_hash:
+        cur.execute('UPDATE users SET last_login WHERE username = ?', (user,))
+        close_db()
+        return True
+    else:
+        close_db()
+        return False
+
+
 def save_message(sender, recipient, message):
     conn, cur = establish_db_conn()
-    query_input = (sender, recipient, message,)
+    query_input = (datetime.now(), sender, recipient, message,)
     cur.execute('''INSERT INTO messages VALUES (?, ?, ?, ?)''', query_input)
-    close_db()
+    close_db(conn)
 
 
 def main():

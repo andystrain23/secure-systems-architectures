@@ -28,30 +28,31 @@ args = parser.parse_args()
 
 
 def create_user(user):
-    pw1 = getpass('Password: ')
+    pw1 = getpass('Input the password for the new account: ')
     pw2 = getpass('Confirm password: ')
     key = 'a thing'
-    #  generate and store key
+    #  TODO: generate and store key
     if pw1 == pw2:
+        # TODO: hash password
         server.new_user(user, pw1, key)
-    # also need to create and store keys
 
 
-def get_message(user):
+def get_message():
     return input('Input your message:\n')
 
 
 def send_message(sender, recipient):
+    login(sender)
     msg = get_message()
-    print(msg)
-    pass
+    server.save_message(sender, recipient, msg)
 
 
 def login(username):
     # request to server to check credentials
     # returns true if login valid
     password = getpass('Input your password: ')
-    pass
+    # hash the password
+    return server.login(username, password)
 
 
 def main():
@@ -61,6 +62,10 @@ def main():
             print(user)
     elif args.new_user:
         create_user(args.new_user)
+    elif args.send_to:
+        if args.username is not None:
+            send_message(args.username, args.send_to)
+    
 
     print(args)
 
