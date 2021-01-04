@@ -1,6 +1,6 @@
 import argparse
 from getpass import getpass
-# import cryptography
+import hashlib
 import server
 
 parser = argparse.ArgumentParser()
@@ -22,7 +22,7 @@ parser.add_argument(
 parser.add_argument(
     '--new-user',
     action='store',
-    help='create a new user to store in the database'
+    help='create a new user to store in the database, specify new username after this flag'
 )
 args = parser.parse_args()
 
@@ -30,11 +30,11 @@ args = parser.parse_args()
 def create_user(user):
     pw1 = getpass('Input the password for the new account: ')
     pw2 = getpass('Confirm password: ')
-    key = 'a thing'
-    #  TODO: generate and store key
     if pw1 == pw2:
-        # TODO: hash password
-        server.new_user(user, pw1, key)
+        hashed = hashlib.sha256(pw1.encode('utf-8'))
+        server.new_user(user, hashed.hexdigest())
+    else:
+        return 'Passwords don\'t match'
 
 
 def get_message():
@@ -42,17 +42,19 @@ def get_message():
 
 
 def send_message(sender, recipient):
-    login(sender)
-    msg = get_message()
-    server.save_message(sender, recipient, msg)
+    if login(sender):
+        msg = get_message()
+        server.save_message(sender, recipient, msg)
+    else:
+        print('Login failed. The account may not exist or the password may be wrong.')
 
 
 def login(username):
     # request to server to check credentials
     # returns true if login valid
     password = getpass('Input your password: ')
-    # hash the password
-    return server.login(username, password)
+    hashed = hashlib.sha256(password.encode('utf-8'))
+    return server.login(username, hashed.hexdigest())
 
 
 def main():
@@ -65,9 +67,6 @@ def main():
     elif args.send_to:
         if args.username is not None:
             send_message(args.username, args.send_to)
-    
-
-    print(args)
 
 
 main()
